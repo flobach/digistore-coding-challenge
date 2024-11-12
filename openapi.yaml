@@ -23,22 +23,9 @@ paths:
           content:
             application/json:
               schema:
-                type: "object"
-                properties:
-                  messages:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        uuid: 
-                          type: "string"
-                        text:
-                          type: "string"
-                        status:
-                          type: "string"
-                          enum:
-                            - "sent"
-                            - "read"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Message"
               example:
                 messages:
                   - text: "Hello, World!"
@@ -47,16 +34,43 @@ paths:
                     status: "sent"
                   - text: "Thanks, I'm fine. How about you?"
                     status: "sent"
+        '400':
+          description: "An error has occoured"
   /messages/send:
-    get:
+    post:
       summary: Send a Message
-      parameters:
-        - name: text
-          in: query
-          description: The text you want to send
-          required: true
-          schema:
-            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - text
+              properties:
+                text:
+                  description: The text you want to send
+                  type: "string"
+                  example: "Hello from Munich"
       responses:
         '204':
           description: Successfully sent
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        messages:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              uuid:
+                type: "string"
+              text:
+                type: "string"
+              status:
+                type: "string"
+                enum:
+                  - "sent"
+                  - "read"
