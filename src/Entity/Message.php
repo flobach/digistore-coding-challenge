@@ -28,7 +28,7 @@ class Message
     private ?string $status = null;
     
     #[ORM\Column(type: 'datetime')]
-    private DateTime $createdAt;
+    private ?DateTime $createdAt = null;
 
     public function getId(): ?int
     {
@@ -71,7 +71,7 @@ class Message
         return $this;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
