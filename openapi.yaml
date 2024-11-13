@@ -23,17 +23,23 @@ paths:
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/Message"
+                type: "object"
+                properties:
+                  messages:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/Message"
               example:
                 messages:
                   - text: "Hello, World!"
                     status: "read"
+                    uuid: "1efa1f69-eba3-6f6a-9ce5-151964c7136c"
                   - text: "How are you today?"
                     status: "sent"
+                    uuid: "1efa1f69-eba3-6f6a-9ce5-151964c7136c"
                   - text: "Thanks, I'm fine. How about you?"
                     status: "sent"
+                    uuid: "1efa1f69-eba3-6f6a-9ce5-151964c7136c"
         '400':
           description: "An error has occoured"
   /messages/send:
@@ -55,6 +61,8 @@ paths:
       responses:
         '204':
           description: Successfully sent
+        '400':
+          description: "An error has occoured"
 components:
   schemas:
     Message:
@@ -67,8 +75,11 @@ components:
             properties:
               uuid:
                 type: "string"
+                description: "a RFC4122 compatible uuid"
+                example: "1efa1f69-eba3-6f6a-9ce5-151964c7136c"
               text:
                 type: "string"
+                example: "Some message"
               status:
                 type: "string"
                 enum:
