@@ -48,10 +48,10 @@ class MessageController extends AbstractController
             status: $requestObject->getStatus()
         );
 
-        $response = array_map(static fn (Message $message) => MessageMapper::mapEntityToDto($message), $messages);
+        $data = array_map(static fn (Message $message) => MessageMapper::mapEntityToDto($message), $messages);
         
         return new Response(json_encode([
-            'messages' => $response,
+            'messages' => $data,
         ], JSON_THROW_ON_ERROR), headers: ['Content-Type' => 'application/json']);
     }
 
